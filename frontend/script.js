@@ -15,7 +15,7 @@ function paintTheme(){
 themeBtn.addEventListener('click',()=>{
   const n=eff()==='dark'?'light':'dark';
   root.setAttribute('data-theme',n);
-  try{localStorage.setItem('camlo-theme',n)}catch(e){}
+  try{localStorage.setItem('zulystudy-theme',n)}catch(e){}
   paintTheme();
 });
 paintTheme();
@@ -227,13 +227,13 @@ function addMsg(html){
 }
 const av=(n,c)=>'<span class="av" style="background:'+c+'">'+n+'</span>';
 const userMsg=(n,c,time,t)=>av(n.split(' ').map(w=>w[0]).join(''),c)+'<div><div class="who"><b>'+n+'</b><time>'+time+'</time></div><p>'+t+'</p></div>';
-const botMsg=inner=>av('C','var(--rose)')+'<div><div class="who"><b>Camlo</b><span class="tag">BOT</span><time>vừa xong</time></div>'+inner+'</div>';
+const botMsg=inner=>av('C','var(--rose)')+'<div><div class="who"><b>Zulystudy</b><span class="tag">BOT</span><time>vừa xong</time></div>'+inner+'</div>';
 addMsg(userMsg('Thu Hà','var(--p1)','20:41','Ai học tới khuya không, mình mới vào phòng.'));
 addMsg(userMsg('Quốc Bảo','var(--p2)','20:42','Mình đang bật cam rồi nè. Ai muốn xem hạng tuần thì gõ lệnh nhé.'));
 const scen=[
   {cmd:'/giohoc',html:'<div class="embed" style="--ec:var(--p1)"><b>Giờ học của Minh Anh</b><div class="fields"><div><span>Hôm nay</span><b>4g 32p</b></div><div><span>Tuần này</span><b>21g 40p</b></div><div><span>Chuỗi ngày</span><b>12 ngày</b></div></div><div class="mbar"><i style="--w:76%"></i></div></div>'},
   {cmd:'/xephang',html:'<div class="embed" style="--ec:var(--p2)"><b>Bảng xếp hạng hôm nay</b><div class="lines"><div><span>1. Thu Hà</span><b>5g 12p</b></div><div><span>2. Minh Anh</span><b>4g 34p</b></div><div><span>3. Quốc Bảo</span><b>4g 01p</b></div></div></div>'},
-  {cmd:'/muctieu 4',html:'<div class="embed" style="--ec:var(--p3)"><b>Đã đặt mục tiêu 4 giờ mỗi ngày</b><div class="lines"><div><span>Camlo sẽ nhắc bạn lúc 21:00 nếu chưa đủ giờ.</span></div></div><div class="mbar"><i style="--w:63%"></i></div></div>'}
+  {cmd:'/muctieu 4',html:'<div class="embed" style="--ec:var(--p3)"><b>Đã đặt mục tiêu 4 giờ mỗi ngày</b><div class="lines"><div><span>Zulystudy sẽ nhắc bạn lúc 21:00 nếu chưa đủ giờ.</span></div></div><div class="mbar"><i style="--w:63%"></i></div></div>'}
 ];
 let vis=false, waiters=[];
 const ioC=new IntersectionObserver(es=>{
@@ -342,7 +342,7 @@ async function choose(p){
   resetP3();
   $('#p3Prov').textContent=name;
   $('#p3Step1').textContent='Xác nhận tài khoản '+name;
-  $('#p3Sub').innerHTML='Camlo đang kết nối với <b>'+name+'</b>.';
+  $('#p3Sub').innerHTML='Zulystudy đang kết nối với <b>'+name+'</b>.';
   setState(2);
   await sleep(D*.85);if(my!==token)return;
   if(AUTH_URLS[p]){location.href=AUTH_URLS[p];return}
@@ -708,7 +708,7 @@ function renderServers(){
   const opt=(arr,v)=>arr.map(o=>'<option'+(o===v?' selected':'')+'>'+o+'</option>').join('');
   $('#srvDetail').innerHTML=
     '<div class="dc-head"><h3>'+s.n+'</h3><span class="muted">'+s.m.toLocaleString('vi-VN')+' thành viên</span></div>'+
-    (s.ok?'':'<div class="banner" id="banner"><span>Camlo chưa có quyền xem kênh voice ở server này nên chưa tính giờ được.</span><button type="button" class="btn" id="fix">Cấp quyền</button></div>')+
+    (s.ok?'':'<div class="banner" id="banner"><span>Zulystudy chưa có quyền xem kênh voice ở server này nên chưa tính giờ được.</span><button type="button" class="btn" id="fix">Cấp quyền</button></div>')+
     '<h4 class="sub-h">Kênh voice được tính giờ</h4>'+
     '<ul class="ch-list">'+s.ch.map((c,i)=>
       '<li class="ch"><svg class="ic"><use href="#i-speaker"/></svg><div><b>'+c[0]+'</b><span>'+(c[2]?c[2]+' người đang trong kênh':'Hiện chưa có ai')+'</span></div>'+
@@ -737,7 +737,7 @@ $('#srvDetail').addEventListener('click',e=>{
       s.ok=1;
       const bn=$('#banner');if(bn)bn.classList.add('gone');
       setTimeout(renderServers,380);
-      atoast('Camlo đã có đủ quyền ở '+s.n);
+      atoast('Zulystudy đã có đủ quyền ở '+s.n);
     },1000);
   }
 });
@@ -746,7 +746,7 @@ $('#srvDetail').addEventListener('change',e=>{
   if(e.target.id==='selBoard'){s.board=e.target.value;atoast('Đã chọn kênh #'+e.target.value)}
   if(e.target.id==='selReset'){s.reset=e.target.value;atoast('Bảng xếp hạng đặt lại '+e.target.value.toLowerCase())}
 });
-$('#invite').addEventListener('click',()=>atoast('Mở trang mời Camlo (bản minh họa)'));
+$('#invite').addEventListener('click',()=>atoast('Mở trang mời Zulystudy (bản minh họa)'));
 
 /* cài đặt */
 function paintLinks(){
@@ -771,8 +771,8 @@ function paintThemeSeg(){
 $('#themeSeg').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   const v=b.dataset.th;
-  if(v==='auto'){root.removeAttribute('data-theme');try{localStorage.removeItem('camlo-theme')}catch(x){}}
-  else{root.setAttribute('data-theme',v);try{localStorage.setItem('camlo-theme',v)}catch(x){}}
+  if(v==='auto'){root.removeAttribute('data-theme');try{localStorage.removeItem('zulystudy-theme')}catch(x){}}
+  else{root.setAttribute('data-theme',v);try{localStorage.setItem('zulystudy-theme',v)}catch(x){}}
   paintTheme();paintThemeSeg();
 });
 let wipeTm, wipeArm=false;

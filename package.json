@@ -1,0 +1,29 @@
+{
+  "name": "zulystudy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:fe": "serve frontend -p 3000",
+    "dev:be": "cd backend && npm run dev",
+    "dev:bot": "cd bot && node index.js",
+    "dev": "concurrently -c \"bgBlue.bold,bgGreen.bold,bgYellow.bold\" -n \"FE,BE,BOT\" \"npm run dev:fe\" \"npm run dev:be\" \"npm run dev:bot\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/griin-03/zulystudy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/griin-03/zulystudy/issues"
+  },
+  "homepage": "https://github.com/griin-03/zulystudy#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "serve": "^14.2.6"
+  }
+}

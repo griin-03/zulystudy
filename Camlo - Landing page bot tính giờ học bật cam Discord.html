@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Camlo - Bật cam lên, giờ học tự chạy trên Discord</title>
+<meta name="description" content="Camlo là bot Discord tính thời gian học của bạn mỗi khi bật camera trong phòng voice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+document.documentElement.classList.add('js');
+try{var t=localStorage.getItem('camlo-theme');if(t){document.documentElement.setAttribute('data-theme',t)}}catch(e){}
+</script>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10.5l5-3v9l-5-3"/></symbol>
+    <symbol id="i-camera-off" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10.5l5-3v9l-5-3M3 3l18 18"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4M12 13v4M8 20h8M10 17h4"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16 9a4 4 0 0 1 0 6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 1c.7 6 5 10.300 11 11-6 .7-10.300 5-11 11-.7-6-5-10.300-11-11 6-.7 10.300-5 11-11z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.500 2h-15zM10 20a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  </defs>
+</svg>
+
+<div id="progress"></div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="logo" aria-label="Camlo - trang chủ">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#C94650"/><circle cx="15" cy="16" r="7.5" fill="none" stroke="#FFF" stroke-width="2.4"/><circle cx="15" cy="16" r="2.6" fill="#FFF"/><circle cx="24" cy="6.500" r="3" fill="#F4CF55"/></svg>
+      Camlo
+    </a>
+    <nav class="nav-links" aria-label="Điều hướng chính">
+      <a href="#how">Cách hoạt động</a>
+      <a href="#features">Tính năng</a>
+      <a href="#rank">Bảng xếp hạng</a>
+      <a href="#faq">Hỏi đáp</a>
+    </nav>
+    <div class="nav-end">
+      <button class="icon-btn" id="theme" type="button" aria-label="Đổi giao diện"><svg class="ic"><use id="themeUse" href="#i-moon"/></svg></button>
+      <button type="button" class="btn btn-ghost btn-sm" data-open-login>Đăng nhập</button>
+      <button type="button" class="me-chip" id="meChip" aria-label="Đã đăng nhập. Nhấn để đăng xuất"><span class="me-av" id="meAv">MA</span><span class="me-name" id="meName">Minh Anh</span></button>
+      <a href="#cta" class="btn btn-primary btn-sm nav-add">Thêm vào Discord</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <span class="spark sp1" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></span>
+  <span class="spark sp2" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></span>
+  <div class="wrap hero-grid">
+    <div>
+      <h1 data-reveal>
+        <span>Bật cam lên,</span>
+        <span>giờ học tự chạy.</span>
+      </h1>
+      <p class="lead" data-reveal style="--rd:.15s">Camlo là bot Discord tính thời gian học của bạn mỗi khi bạn bật camera trong phòng voice. Tắt cam thì đồng hồ tạm dừng, không cần bấm nút nào.</p>
+      <div class="cta-row" data-reveal style="--rd:.3s">
+        <a href="#cta" class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Thêm Camlo vào Discord</a>
+        <a href="#how" class="btn btn-ghost">Xem cách hoạt động</a>
+      </div>
+      <p class="fine" data-reveal style="--rd:.4s">Miễn phí cho mọi server. Không cần quyền quản trị.</p>
+      <div class="stats" data-reveal style="--rd:.5s">
+        <div><b data-count="48200">0</b><span>giờ học đã ghi nhận</span></div>
+        <div><b data-count="3100">0</b><span>server đang dùng</span></div>
+        <div><b data-count="1284">0</b><span>người đang bật cam</span></div>
+      </div>
+    </div>
+
+    <div class="room-wrap">
+      <div class="room" id="room" aria-label="Minh họa phòng học trực tuyến">
+        <div class="room-head">
+          <svg class="ic"><use href="#i-speaker"/></svg>
+          <span>Phòng học chung</span>
+          <span class="pill"><i class="dot"></i><span id="liveCount">5 đang bật cam</span></span>
+        </div>
+        <div class="tiles" id="tiles"></div>
+        <div class="feed" role="status" aria-live="polite">
+          <span class="chk"><svg class="ic"><use href="#i-check"/></svg></span>
+          <span id="feedText">Cả phòng đang học cùng nhau</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marq" aria-hidden="true">
+  <div class="track" id="track">
+    <div class="group">
+      <span>Ôn thi tốt nghiệp</span><span>IELTS buổi sáng</span><span>Lập trình cùng nhau</span><span>Đồ án đêm khuya</span><span>Đọc sách yên tĩnh</span><span>Luyện đề đại học</span><span>Viết luận văn</span><span>Học tiếng Nhật</span>
+    </div>
+  </div>
+</div>
+
+<!-- HOW -->
+<section id="how" class="sec">
+  <div class="wrap how-grid">
+    <div>
+      <h2 data-reveal>Ba bước là bắt đầu học</h2>
+      <p class="lead" data-reveal style="--rd:.1s">Không cần tạo tài khoản mới. Mọi thứ chạy bằng chính tài khoản Discord của bạn.</p>
+      <ol class="steps" id="steps" data-reveal>
+        <li style="--k:0"><span class="box"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><h3>Thêm Camlo vào server</h3><p>Chọn server của bạn và cho phép bot xem kênh voice. Chưa tới một phút là xong.</p></div></li>
+        <li style="--k:1"><span class="box"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><h3>Vào phòng voice và bật cam</h3><p>Camlo nhận biết khi camera bật và bắt đầu tính giờ ngay lập tức.</p></div></li>
+        <li style="--k:2"><span class="box"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><h3>Xem giờ học của mình</h3><p>Tắt cam thì tạm dừng. Cuối ngày xem tổng kết ngay trong Discord hoặc trên web.</p></div></li>
+      </ol>
+    </div>
+
+    <div>
+      <div class="demo" id="demo" data-reveal>
+        <div class="demo-head">
+          <svg class="ic"><use href="#i-speaker"/></svg>
+          <span>Phòng Ôn thi 24/7</span>
+          <span class="chipS"><i></i><span id="chipText">Đang tính giờ</span></span>
+        </div>
+        <div class="ringbox">
+          <svg viewBox="0 0 220 220" aria-hidden="true">
+            <circle class="track-c" cx="110" cy="110" r="88"/>
+            <circle class="prog" id="prog" cx="110" cy="110" r="88" transform="rotate(-90 110 110)"/>
+            <g class="orbit"><circle cx="110" cy="22" r="8"/></g>
+          </svg>
+          <div class="ring-c"><div class="big" id="big"></div></div>
+        </div>
+        <p class="goal">Mục tiêu hôm nay: 4 giờ</p>
+        <div class="sw-row">
+          <div>
+            <b><svg class="ic" id="swIcon"><use href="#i-camera"/></svg>Camera của bạn</b>
+            <span id="swText">Đang bật, giờ học đang chạy</span>
+          </div>
+          <button class="sw" id="sw" type="button" role="switch" aria-checked="true" aria-label="Bật hoặc tắt camera"><i></i></button>
+        </div>
+        <div class="mini-stats">
+          <div><span>Phiên này</span><b id="sess">00:00:00</b></div>
+          <div><span>Tổng hôm nay</span><b id="today">02:14:08</b></div>
+        </div>
+      </div>
+      <p class="demo-cap">Thử gạt công tắc camera để xem đồng hồ phản ứng.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="sec feat">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-reveal>Giữ nhịp học đều mỗi ngày</h2>
+      <p class="lead" data-reveal style="--rd:.1s">Từ đồng hồ tự động đến bảng xếp hạng, Camlo giúp cả phòng cùng học đều đặn hơn.</p>
+    </div>
+
+    <div class="bento" id="bento">
+      <article class="card span3" data-reveal>
+        <h3><svg class="ic"><use href="#i-camera"/></svg>Chỉ tính khi bật cam</h3>
+        <p>Mỗi giây bạn xuất hiện trên camera đều được ghi lại. Khoảng tắt cam được bỏ qua, nên con số luôn thật.</p>
+        <div class="viz">
+          <div class="tl" role="img" aria-label="Biểu đồ các khoảng bật cam và tắt cam trong buổi tối">
+            <i class="on"  style="--l:0;--w:22;--d:0"></i>
+            <i class="off" style="--l:22;--w:8;--d:.35"></i>
+            <i class="on"  style="--l:30;--w:38;--d:.5"></i>
+            <i class="off" style="--l:68;--w:8;--d:.9"></i>
+            <i class="on"  style="--l:76;--w:24;--d:1.05"></i>
+          </div>
+          <div class="tl-axis"><span>19:00</span><span>21:00</span><span>23:00</span></div>
+          <div class="legend"><span><i></i>Bật cam, được tính</span><span><i class="o"></i>Tắt cam, tạm dừng</span></div>
+        </div>
+      </article>
+
+      <article class="card span3" data-reveal>
+        <h3><svg class="ic"><use href="#i-trophy"/></svg>Bảng xếp hạng theo phòng</h3>
+        <p>So giờ học với bạn bè theo ngày, tuần hoặc tháng. Mỗi server có bảng riêng.</p>
+        <div class="viz">
+          <div class="bars" role="img" aria-label="Biểu đồ giờ học trong tuần">
+            <div><span class="bw"><i style="--h:48;--k:0"></i></span><span>T2</span></div>
+            <div><span class="bw"><i style="--h:62;--k:1"></i></span><span>T3</span></div>
+            <div><span class="bw"><i style="--h:40;--k:2"></i></span><span>T4</span></div>
+            <div><span class="bw"><i style="--h:74;--k:3"></i></span><span>T5</span></div>
+            <div class="hl"><span class="bw"><i style="--h:96;--k:4"></i></span><span>T6</span></div>
+            <div><span class="bw"><i style="--h:58;--k:5"></i></span><span>T7</span></div>
+            <div><span class="bw"><i style="--h:68;--k:6"></i></span><span>CN</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span2" data-reveal>
+        <h3><svg class="ic"><use href="#i-flame"/></svg>Chuỗi ngày học</h3>
+        <p>Học mỗi ngày để giữ chuỗi không bị đứt.</p>
+        <div class="viz">
+          <div class="heat" id="heat" aria-hidden="true"></div>
+          <div class="streak"><svg class="ic"><use href="#i-flame"/></svg>Chuỗi hiện tại: 12 ngày</div>
+        </div>
+      </article>
+
+      <article class="card span2" data-reveal>
+        <h3><svg class="ic"><use href="#i-target"/></svg>Mục tiêu mỗi ngày</h3>
+        <p>Đặt số giờ muốn học, Camlo nhắc bạn ngay trong Discord.</p>
+        <div class="viz">
+          <div class="segs" role="img" aria-label="Đã học 2 giờ 30 phút trên mục tiêu 4 giờ">
+            <i class="f" style="--k:0"></i><i class="f" style="--k:1"></i><i class="f" style="--k:2"></i><i class="f" style="--k:3"></i><i class="f" style="--k:4"></i><i></i><i></i><i></i>
+          </div>
+          <div class="goal-t"><span>2 giờ 30 phút</span><span>Mục tiêu 4 giờ</span></div>
+        </div>
+      </article>
+
+      <article class="card span2" data-reveal>
+        <h3><svg class="ic"><use href="#i-grid"/></svg>Phòng theo môn</h3>
+        <p>Chọn phòng hợp với việc bạn đang làm.</p>
+        <div class="viz">
+          <div class="rooms" id="rooms">
+            <div>Ôn thi tốt nghiệp<em data-n="214">214</em></div>
+            <div>IELTS buổi sáng<em data-n="98">98</em></div>
+            <div>Lập trình<em data-n="163">163</em></div>
+            <div>Đọc sách yên tĩnh<em data-n="71">71</em></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- RANK -->
+<section id="rank" class="sec">
+  <div class="wrap rank-grid">
+    <div>
+      <h2 data-reveal>Ai đang học nhiều nhất?</h2>
+      <p class="lead" data-reveal style="--rd:.1s">Bảng xếp hạng cập nhật liên tục theo từng server. Xem hôm nay, tuần này hoặc cả tháng, rồi rủ nhau bắt kịp người đứng đầu.</p>
+      <div class="me-card" data-reveal style="--rd:.2s">
+        <b id="meTitle">Xem hạng của bạn</b>
+        <p id="meSub">Đăng nhập để so giờ học với cả phòng.</p>
+        <button type="button" class="btn btn-primary btn-sm" id="meBtn" data-open-login>Đăng nhập</button>
+      </div>
+    </div>
+
+    <div class="rank-card" data-reveal>
+      <div class="seg" role="tablist" aria-label="Khoảng thời gian">
+        <i class="seg-ind" id="segInd"></i>
+        <button type="button" role="tab" aria-selected="true" data-k="day">Hôm nay</button>
+        <button type="button" role="tab" aria-selected="false" data-k="week">Tuần này</button>
+        <button type="button" role="tab" aria-selected="false" data-k="month">Tháng này</button>
+      </div>
+      <ol class="rank-list" id="rankList"></ol>
+    </div>
+  </div>
+</section>
+
+<!-- DISCORD -->
+<section id="discord" class="sec dc">
+  <div class="wrap dc-grid">
+    <div>
+      <h2 data-reveal>Xem giờ học ngay trong Discord</h2>
+      <p class="lead" data-reveal style="--rd:.1s">Gõ một lệnh trong kênh bất kỳ. Camlo trả lời ngay, bạn không cần mở web.</p>
+      <ul class="cmds" data-reveal style="--rd:.2s">
+        <li><code>/giohoc</code><span>Xem giờ học hôm nay, tuần này và chuỗi ngày</span></li>
+        <li><code>/xephang</code><span>Xem top người học nhiều nhất trong server</span></li>
+        <li><code>/muctieu</code><span>Đặt số giờ muốn học mỗi ngày</span></li>
+      </ul>
+    </div>
+    <div class="chat" data-reveal>
+      <div class="chat-head"><span class="hash">#</span>bao-cao-hoc-tap</div>
+      <div class="chat-body" id="chatBody" aria-live="polite"></div>
+      <div class="chat-input" id="chatInput"><span id="typed"></span><span class="caret"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<div class="privacy">
+  <div class="wrap" data-reveal>
+    <span class="lock"><svg class="ic"><use href="#i-lock"/></svg></span>
+    <div>
+      <h3>Camlo không xem và không ghi hình</h3>
+      <p>Bot chỉ đọc trạng thái camera đang bật hay tắt. Hình ảnh của bạn luôn nằm trong Discord.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section id="faq" class="sec">
+  <div class="wrap faq-grid">
+    <div>
+      <h2 data-reveal>Câu hỏi thường gặp</h2>
+      <p class="lead" data-reveal style="--rd:.1s">Chưa thấy câu trả lời bạn cần? Hỏi trực tiếp trong máy chủ hỗ trợ của Camlo.</p>
+    </div>
+    <div class="faq" id="faqList" data-reveal>
+      <div class="qa open"><button type="button" aria-expanded="true"><span>Camlo có ghi hình hay lưu hình ảnh của tôi không?</span><svg class="ic chev"><use href="#i-chev"/></svg></button><div class="ans"><div><p>Không. Camlo chỉ biết camera của bạn đang bật hay tắt. Bot không xem, không ghi hình và không lưu bất kỳ hình ảnh nào.</p></div></div></div>
+      <div class="qa"><button type="button" aria-expanded="false"><span>Tắt cam giữa chừng thì sao?</span><svg class="ic chev"><use href="#i-chev"/></svg></button><div class="ans"><div><p>Đồng hồ tạm dừng ngay. Khi bạn bật lại, giờ học tiếp tục cộng dồn vào tổng của ngày.</p></div></div></div>
+      <div class="qa"><button type="button" aria-expanded="false"><span>Chia sẻ màn hình có được tính giờ không?</span><svg class="ic chev"><use href="#i-chev"/></svg></button><div class="ans"><div><p>Không. Chỉ thời gian bật camera trong phòng voice mới được tính, để bảng xếp hạng công bằng cho mọi người.</p></div></div></div>
+      <div class="qa"><button type="button" aria-expanded="false"><span>Camlo cần những quyền gì?</span><svg class="ic chev"><use href="#i-chev"/></svg></button><div class="ans"><div><p>Xem kênh voice và gửi tin nhắn trong kênh báo cáo. Camlo không cần quyền quản trị.</p></div></div></div>
+      <div class="qa"><button type="button" aria-expanded="false"><span>Dùng Camlo có mất phí không?</span><svg class="ic chev"><use href="#i-chev"/></svg></button><div class="ans"><div><p>Camlo miễn phí cho mọi server. Gói nâng cao dành cho server lớn muốn có báo cáo chi tiết hơn.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="cta-panel" data-reveal>
+      <span class="fl f1" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></span>
+      <span class="fl f2" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></span>
+      <span class="fl f3" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></span>
+      <span class="fl f4" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></span>
+      <h2>Vào phòng, bật cam, học thôi.</h2>
+      <p class="sub">Thêm Camlo vào server của bạn trong chưa đầy một phút.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-primary"><svg class="ic"><use href="#i-plus"/></svg>Thêm Camlo vào Discord</a>
+        <a href="#rank" class="btn btn-ghost">Xem bảng xếp hạng</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="logo">
+          <svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#C94650"/><circle cx="15" cy="16" r="7.5" fill="none" stroke="#FFF" stroke-width="2.4"/><circle cx="15" cy="16" r="2.6" fill="#FFF"/><circle cx="24" cy="6.500" r="3" fill="#F4CF55"/></svg>
+          Camlo
+        </a>
+        <p>Bot Discord tính giờ học khi bạn bật camera. Học chung cho vui, học đều cho giỏi.</p>
+      </div>
+      <div><h4>Sản phẩm</h4><ul><li><a href="#how">Cách hoạt động</a></li><li><a href="#features">Tính năng</a></li><li><a href="#rank">Bảng xếp hạng</a></li></ul></div>
+      <div><h4>Hỗ trợ</h4><ul><li><a href="#faq">Hỏi đáp</a></li><li><a href="#">Máy chủ hỗ trợ</a></li><li><a href="#">Liên hệ</a></li></ul></div>
+      <div><h4>Pháp lý</h4><ul><li><a href="#">Điều khoản sử dụng</a></li><li><a href="#">Chính sách quyền riêng tư</a></li></ul></div>
+    </div>
+    <p class="legal">Camlo là dịch vụ độc lập và không liên kết với Discord Inc.</p>
+  </div>
+</footer>
+
+<!-- DASHBOARD -->
+<div class="app" id="app">
+  <aside class="side" aria-label="Điều hướng bảng điều khiển">
+    <a href="#" class="logo" data-go="overview">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#C94650"/><circle cx="15" cy="16" r="7.5" fill="none" stroke="#FFF" stroke-width="2.4"/><circle cx="15" cy="16" r="2.6" fill="#FFF"/><circle cx="24" cy="6.5" r="3" fill="#F4CF55"/></svg>
+      Camlo
+    </a>
+    <nav class="snav" id="snav">
+      <i class="nav-ind" id="navInd"></i>
+      <button type="button" data-go="overview" class="on"><svg class="ic"><use href="#i-home"/></svg>Tổng quan</button>
+      <button type="button" data-go="sessions"><svg class="ic"><use href="#i-clock"/></svg>Phiên học</button>
+      <button type="button" data-go="rank"><svg class="ic"><use href="#i-trophy"/></svg>Xếp hạng</button>
+      <button type="button" data-go="goals"><svg class="ic"><use href="#i-target"/></svg>Mục tiêu</button>
+      <button type="button" data-go="servers"><svg class="ic"><use href="#i-server"/></svg>Máy chủ</button>
+      <button type="button" data-go="settings"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt</button>
+    </nav>
+    <div class="side-foot">
+      <div class="who-card"><span class="me-av app-av">MA</span><div><b class="app-name">Minh Anh</b><span class="app-prov">Đăng nhập bằng Discord</span></div></div>
+      <button type="button" class="btn btn-ghost btn-sm" data-logout><svg class="ic"><use href="#i-logout"/></svg>Đăng xuất</button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-top">
+      <span class="logo">
+        <svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#C94650"/><circle cx="15" cy="16" r="7.5" fill="none" stroke="#FFF" stroke-width="2.4"/><circle cx="15" cy="16" r="2.6" fill="#FFF"/><circle cx="24" cy="6.5" r="3" fill="#F4CF55"/></svg>
+        Camlo
+      </span>
+      <button type="button" class="me-chip" style="display:flex;padding:3px" data-go="settings" aria-label="Mở cài đặt tài khoản"><span class="me-av app-av">MA</span></button>
+    </header>
+
+    <main class="views">
+
+      <!-- TỔNG QUAN -->
+      <section class="view on" id="v-overview" data-view="overview">
+        <div class="v-head">
+          <div>
+            <h2 id="greet">Chào buổi tối, Minh Anh</h2>
+            <p class="lead" id="greetSub">Hôm nay bạn đã học 3g 06p.</p>
+          </div>
+          <span class="date-pill" data-date></span>
+        </div>
+
+        <div class="ov-grid">
+          <article class="dcard today" id="today">
+            <div class="dc-head"><h3>Hôm nay</h3><span class="pill2" id="dPill"><i class="dot"></i><span id="dPillTxt">Đang tính giờ</span></span></div>
+            <div class="d-ring">
+              <svg viewBox="0 0 220 220" aria-hidden="true">
+                <circle class="d-track" cx="110" cy="110" r="88"/>
+                <circle class="d-prog" id="dProg" cx="110" cy="110" r="88" transform="rotate(-90 110 110)"/>
+                <g class="d-orbit"><circle cx="110" cy="22" r="8"/></g>
+              </svg>
+              <div class="d-ring-c"><div class="d-clock" id="dClock"></div></div>
+            </div>
+            <p class="d-goal" id="dGoalTxt">78% mục tiêu</p>
+            <div class="room-line">
+              <svg class="ic"><use href="#i-speaker"/></svg>
+              <div><b id="dRoom">Ôn thi tốt nghiệp</b><span id="dRoomSub">Phiên này 00:12:00</span></div>
+              <button type="button" class="sw" id="dSw" role="switch" aria-checked="true" aria-label="Thử bật hoặc tắt camera"><i></i></button>
+            </div>
+            <p class="hint">Gạt công tắc để thử bật hoặc tắt camera.</p>
+          </article>
+
+          <div class="stats4">
+            <article class="dcard stat" style="--i:0;--tint:var(--p6)"><span class="st-ic"><svg class="ic"><use href="#i-clock"/></svg></span><span class="st-l">Tuần này</span><b class="st-v" id="sWeek">23g 26p</b><span class="st-d">Tăng 12% so với tuần trước</span></article>
+            <article class="dcard stat" style="--i:1;--tint:var(--p4)"><span class="st-ic"><svg class="ic"><use href="#i-flame"/></svg></span><span class="st-l">Chuỗi ngày học</span><b class="st-v">12 ngày</b><span class="st-d">Kỷ lục của bạn là 21 ngày</span></article>
+            <article class="dcard stat" style="--i:2;--tint:var(--p2)"><span class="st-ic"><svg class="ic"><use href="#i-trophy"/></svg></span><span class="st-l">Hạng hôm nay</span><b class="st-v" id="sRank">Hạng 4</b><span class="st-d" id="sRankD">Cách hạng 3 khoảng 19 phút</span></article>
+            <article class="dcard stat" style="--i:3;--tint:var(--p3)"><span class="st-ic"><svg class="ic"><use href="#i-camera"/></svg></span><span class="st-l">Số phiên trong tuần</span><b class="st-v" id="sSess">12 phiên</b><span class="st-d">Trung bình 1g 57p mỗi phiên</span></article>
+          </div>
+
+          <article class="dcard week">
+            <div class="dc-head"><h3>Giờ học 7 ngày qua</h3><span class="muted">Đường nét đứt là mục tiêu</span></div>
+            <div class="d-chart" id="dChart"></div>
+            <div class="d-labels" id="dLabels"></div>
+            <p class="unit">Đơn vị: giờ</p>
+          </article>
+
+          <article class="dcard board">
+            <div class="dc-head"><h3>Xếp hạng hôm nay</h3><span class="muted">Cùng phòng</span></div>
+            <ol class="b-list" id="bList"></ol>
+            <button type="button" class="more" data-go="rank">Xem xếp hạng toàn server</button>
+          </article>
+
+          <article class="dcard tasks">
+            <div class="dc-head"><h3>Việc cần làm hôm nay</h3><span class="muted" id="tCount">1/4 xong</span></div>
+            <div class="t-prog"><i id="tBar" style="--w:25%"></i></div>
+            <form class="add-row" id="tForm" autocomplete="off">
+              <input class="inp" id="tInput" type="text" maxlength="80" placeholder="Thêm việc mới" aria-label="Thêm việc mới">
+              <button type="submit" class="btn btn-primary btn-sm">Thêm</button>
+            </form>
+            <ul class="t-list" id="tList"></ul>
+          </article>
+
+          <article class="dcard heatc">
+            <div class="dc-head"><h3>Lịch học 5 tuần</h3><span class="muted">Chuỗi 12 ngày</span></div>
+            <div class="heat" id="dHeat" aria-hidden="true"></div>
+            <div class="heat-leg" aria-hidden="true"><span>Ít</span><i style="--lv:0"></i><i style="--lv:1"></i><i style="--lv:2"></i><i style="--lv:3"></i><i style="--lv:4"></i><span>Nhiều</span></div>
+          </article>
+
+          <article class="dcard recent">
+            <div class="dc-head"><h3>Phiên học gần đây</h3></div>
+            <div id="rList"></div>
+            <button type="button" class="more" data-go="sessions">Xem tất cả phiên học</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- PHIÊN HỌC -->
+      <section class="view" id="v-sessions" data-view="sessions">
+        <div class="v-head">
+          <div>
+            <h2>Phiên học</h2>
+            <p class="lead">Mỗi lần bạn bật cam trong phòng voice đều được ghi lại ở đây.</p>
+          </div>
+        </div>
+        <article class="dcard">
+          <div class="filters">
+            <div class="chips" id="rangeChips" aria-label="Khoảng thời gian">
+              <button type="button" class="chip" data-r="1" aria-pressed="false">Hôm nay</button>
+              <button type="button" class="chip" data-r="3" aria-pressed="false">3 ngày</button>
+              <button type="button" class="chip" data-r="7" aria-pressed="true">7 ngày</button>
+            </div>
+            <div class="chips" id="tagChips" aria-label="Môn học">
+              <button type="button" class="chip" data-t="all" aria-pressed="true">Tất cả môn</button>
+              <button type="button" class="chip" data-t="Toán" aria-pressed="false">Toán</button>
+              <button type="button" class="chip" data-t="Văn" aria-pressed="false">Văn</button>
+              <button type="button" class="chip" data-t="Tiếng Anh" aria-pressed="false">Tiếng Anh</button>
+              <button type="button" class="chip" data-t="Lập trình" aria-pressed="false">Lập trình</button>
+            </div>
+          </div>
+          <div class="sum3">
+            <div><span>Tổng thời gian</span><b id="sumT">0p</b></div>
+            <div><span>Số phiên</span><b id="sumN">0</b></div>
+            <div><span>Trung bình</span><b id="sumA">0p</b></div>
+          </div>
+          <div id="sList"></div>
+        </article>
+      </section>
+
+      <!-- XẾP HẠNG TOÀN SERVER -->
+      <section class="view" id="v-rank" data-view="rank">
+        <div class="v-head">
+          <div>
+            <h2>Bảng xếp hạng</h2>
+            <p class="lead">Xem thứ hạng của cả server theo nhiều tiêu chí khác nhau.</p>
+          </div>
+          <label class="srv-pick"><span class="muted">Máy chủ</span><select class="inp" id="rkServer" aria-label="Chọn máy chủ"></select></label>
+        </div>
+
+        <div class="rk-bar">
+          <div class="bchips" id="rkBoards" role="group" aria-label="Chọn bảng xếp hạng"></div>
+          <div class="seg2" id="rkPeriod" role="group" aria-label="Khoảng thời gian">
+            <button type="button" data-p="day" aria-pressed="false">Hôm nay</button>
+            <button type="button" data-p="week" aria-pressed="true">Tuần</button>
+            <button type="button" data-p="month" aria-pressed="false">Tháng</button>
+            <button type="button" data-p="all" aria-pressed="false">Mọi lúc</button>
+          </div>
+        </div>
+        <div class="chips sub-chips" id="rkSubs" hidden></div>
+        <p class="muted rk-desc" id="rkDesc"></p>
+
+        <div class="sum3 s4" id="rkStats"></div>
+
+        <div id="rkCard" class="rk-card"></div>
+
+        <div class="rk-grid">
+          <article class="dcard rk-5"><div class="dc-head"><h3>Bục vinh danh</h3><span class="muted" id="rkPodTag"></span></div><div id="rkPodium"></div></article>
+          <article class="dcard rk-7"><div class="dc-head"><h3>Biểu đồ xếp hạng</h3><span class="muted">Từ cao xuống thấp</span></div><div class="hb" id="rkChart"></div></article>
+          <article class="dcard rk-5"><div class="dc-head"><h3>Bạn ở đâu trong server</h3><span class="muted" id="rkHistTag"></span></div><div id="rkHist"></div></article>
+          <article class="dcard rk-7"><div class="dc-head"><h3>Quán quân các bảng</h3><span class="muted">Bấm để mở bảng</span></div><div class="champs" id="rkChamps"></div></article>
+
+          <article class="dcard rk-12">
+            <div class="dc-head"><h3>Danh sách xếp hạng</h3><span class="muted" id="rkCount"></span></div>
+            <div class="tbl-tools">
+              <input class="inp" id="rkSearch" type="search" placeholder="Tìm thành viên" aria-label="Tìm thành viên" autocomplete="off">
+              <div class="seg2" id="rkSort" role="group" aria-label="Sắp xếp">
+                <button type="button" data-s="desc" aria-pressed="true">Cao đến thấp</button>
+                <button type="button" data-s="asc" aria-pressed="false">Thấp đến cao</button>
+              </div>
+            </div>
+            <div class="tbl" id="rkTable"></div>
+            <div class="tbl-more"><button type="button" class="btn btn-ghost btn-sm" id="rkMore">Xem thêm</button></div>
+          </article>
+
+          <article class="dcard rk-12">
+            <div class="dc-head"><h3>Thư viện thẻ tên</h3><span class="muted">Avatar và thẻ nền dài theo từng hạng</span></div>
+            <div id="rkCatalog"></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- MỤC TIÊU -->
+      <section class="view" id="v-goals" data-view="goals">
+        <div class="v-head">
+          <div>
+            <h2>Mục tiêu và nhắc nhở</h2>
+            <p class="lead">Đặt số giờ muốn học mỗi ngày, Camlo sẽ nhắc bạn đúng lúc.</p>
+          </div>
+        </div>
+        <div class="two">
+          <article class="dcard">
+            <div class="dc-head"><h3>Mục tiêu mỗi ngày</h3></div>
+            <div class="d-ring" style="width:min(180px,100%)">
+              <svg viewBox="0 0 220 220" aria-hidden="true">
+                <circle class="d-track" cx="110" cy="110" r="88"/>
+                <circle class="d-prog" id="gProg" cx="110" cy="110" r="88" transform="rotate(-90 110 110)" style="stroke-dashoffset:276"/>
+              </svg>
+              <div class="d-ring-c"><div class="stepper-v" style="font-family:var(--fb);font-weight:700;font-size:26px" id="gVal">4 giờ</div></div>
+            </div>
+            <div class="stepper">
+              <button type="button" id="gMinus" aria-label="Giảm 30 phút"><svg class="ic"><use href="#i-minus"/></svg></button>
+              <output id="gOut" aria-live="polite">4g 00p<small>mỗi ngày</small></output>
+              <button type="button" id="gPlus" aria-label="Tăng 30 phút"><svg class="ic"><use href="#i-plus"/></svg></button>
+            </div>
+            <h4 class="sub-h">Những ngày tính mục tiêu</h4>
+            <div class="days" id="gDays">
+              <button type="button" class="chip" aria-pressed="true">T2</button>
+              <button type="button" class="chip" aria-pressed="true">T3</button>
+              <button type="button" class="chip" aria-pressed="true">T4</button>
+              <button type="button" class="chip" aria-pressed="true">T5</button>
+              <button type="button" class="chip" aria-pressed="true">T6</button>
+              <button type="button" class="chip" aria-pressed="false">T7</button>
+              <button type="button" class="chip" aria-pressed="false">CN</button>
+            </div>
+            <div class="save-row"><button type="button" class="btn btn-primary btn-sm" id="gSave">Lưu mục tiêu</button></div>
+          </article>
+
+          <article class="dcard">
+            <div class="dc-head"><h3>Nhắc nhở trong Discord</h3></div>
+            <div class="set-row"><div><b>Nhắc khi chưa đủ giờ</b><span class="d">Camlo nhắn riêng cho bạn nếu đến giờ nhắc mà chưa đạt mục tiêu.</span></div><button type="button" class="sw sw-t" role="switch" aria-checked="true" aria-label="Nhắc khi chưa đủ giờ" data-msg="Đã cập nhật nhắc nhở"><i></i></button></div>
+            <div class="set-row"><div><b>Giờ nhắc</b><span class="d">Thời điểm Camlo kiểm tra tiến độ của bạn.</span></div>
+              <select class="inp" id="remTime" aria-label="Giờ nhắc"><option>20:00</option><option selected>21:00</option><option>22:00</option></select></div>
+            <div class="set-row"><div><b>Báo khi đạt mục tiêu</b><span class="d">Gửi tin chúc mừng trong kênh báo cáo của server.</span></div><button type="button" class="sw sw-t" role="switch" aria-checked="true" aria-label="Báo khi đạt mục tiêu" data-msg="Đã cập nhật nhắc nhở"><i></i></button></div>
+            <div class="set-row"><div><b>Báo cáo cuối tuần</b><span class="d">Tổng kết giờ học và thứ hạng vào tối Chủ nhật.</span></div><button type="button" class="sw sw-t" role="switch" aria-checked="false" aria-label="Báo cáo cuối tuần" data-msg="Đã cập nhật nhắc nhở"><i></i></button></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- MÁY CHỦ -->
+      <section class="view" id="v-servers" data-view="servers">
+        <div class="v-head">
+          <div>
+            <h2>Máy chủ</h2>
+            <p class="lead">Chọn kênh voice nào được tính giờ và nơi Camlo gửi báo cáo.</p>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" id="invite"><svg class="ic"><use href="#i-plus"/></svg>Mời Camlo vào server khác</button>
+        </div>
+        <div class="srv-grid">
+          <div class="srv-list" id="srvList" role="listbox" aria-label="Danh sách máy chủ"></div>
+          <article class="dcard" id="srvDetail"></article>
+        </div>
+      </section>
+
+      <!-- CÀI ĐẶT -->
+      <section class="view" id="v-settings" data-view="settings">
+        <div class="v-head">
+          <div>
+            <h2>Cài đặt</h2>
+            <p class="lead">Quản lý tài khoản, quyền riêng tư và giao diện của bạn.</p>
+          </div>
+        </div>
+        <div class="two">
+          <div style="display:grid;gap:24px">
+            <article class="dcard">
+              <div class="dc-head"><h3>Tài khoản</h3></div>
+              <div class="acct"><span class="me-av app-av">MA</span><div><b class="app-name">Minh Anh</b><span class="app-prov">Đăng nhập bằng Discord</span></div></div>
+              <div class="set-row" style="margin-top:18px"><div><b>Google</b><span class="d" id="gStatus">Chưa kết nối</span></div><button type="button" class="btn btn-ghost btn-sm" data-link="Google" id="linkGoogle">Kết nối</button></div>
+              <div class="set-row"><div><b>Discord</b><span class="d" id="dStatus">Đã kết nối</span></div><span class="ok-chip" id="dChip">Đã kết nối</span></div>
+            </article>
+            <article class="dcard">
+              <div class="dc-head"><h3>Giao diện</h3></div>
+              <div class="seg2" id="themeSeg" role="group" aria-label="Chọn giao diện">
+                <button type="button" data-th="light" aria-pressed="false">Sáng</button>
+                <button type="button" data-th="dark" aria-pressed="false">Tối</button>
+                <button type="button" data-th="auto" aria-pressed="true">Theo máy</button>
+              </div>
+            </article>
+          </div>
+          <div style="display:grid;gap:24px">
+            <article class="dcard">
+              <div class="dc-head"><h3>Quyền riêng tư</h3></div>
+              <div class="set-row"><div><b>Hiện tên trên bảng xếp hạng</b><span class="d">Tắt đi thì bạn hiện là thành viên ẩn danh.</span></div><button type="button" class="sw sw-t" role="switch" aria-checked="true" aria-label="Hiện tên trên bảng xếp hạng" data-msg="Đã lưu quyền riêng tư"><i></i></button></div>
+              <div class="set-row"><div><b>Hiện chuỗi ngày học</b><span class="d">Cho mọi người trong server thấy chuỗi của bạn.</span></div><button type="button" class="sw sw-t" role="switch" aria-checked="true" aria-label="Hiện chuỗi ngày học" data-msg="Đã lưu quyền riêng tư"><i></i></button></div>
+              <div class="set-row"><div><b>Cho bạn bè xem giờ học</b><span class="d">Chỉ bạn bè trên Discord mới xem được.</span></div><button type="button" class="sw sw-t" role="switch" aria-checked="false" aria-label="Cho bạn bè xem giờ học" data-msg="Đã lưu quyền riêng tư"><i></i></button></div>
+            </article>
+            <article class="dcard danger">
+              <div class="dc-head"><h3>Dữ liệu và phiên đăng nhập</h3></div>
+              <div class="set-row"><div><b>Xóa dữ liệu giờ học</b><span class="d">Xóa toàn bộ phiên học đã ghi. Không thể hoàn tác.</span></div><button type="button" class="btn btn-danger btn-sm" id="wipe">Xóa dữ liệu</button></div>
+              <div class="set-row"><div><b>Đăng xuất</b><span class="d">Quay về trang giới thiệu Camlo.</span></div><button type="button" class="btn btn-ghost btn-sm" data-logout>Đăng xuất</button></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <nav class="tabbar" aria-label="Điều hướng chính">
+    <div class="tabbar-in" id="tabIn">
+      <i class="tab-ind" id="tabInd"></i>
+      <button type="button" data-go="overview" class="on"><svg class="ic"><use href="#i-home"/></svg>Tổng quan</button>
+      <button type="button" data-go="sessions"><svg class="ic"><use href="#i-clock"/></svg>Phiên học</button>
+      <button type="button" data-go="rank"><svg class="ic"><use href="#i-trophy"/></svg>Xếp hạng</button>
+      <button type="button" data-go="goals"><svg class="ic"><use href="#i-target"/></svg>Mục tiêu</button>
+      <button type="button" data-go="servers"><svg class="ic"><use href="#i-server"/></svg>Máy chủ</button>
+      <button type="button" data-go="settings"><svg class="ic"><use href="#i-sliders"/></svg>Cài đặt</button>
+    </div>
+  </nav>
+</div>
+<div class="atoast" id="atoast" role="status" aria-live="polite"><svg class="ic"><use href="#i-check"/></svg><span id="atoastTxt"></span></div>
+
+<!-- LOGIN NOTEBOOK -->
+<div class="lg-overlay" id="lgOverlay" role="dialog" aria-modal="true" aria-labelledby="loginTitle" tabindex="-1" hidden>
+  <button type="button" class="lg-close" id="lgClose" aria-label="Đóng sổ đăng nhập"><svg class="ic"><use href="#i-x"/></svg></button>
+  <div class="book-wrap">
+    <div class="book" id="book" data-s="0">
+
+      <!-- trang 3: kết nối (nằm dưới cùng) -->
+      <div class="leaf" id="pg3" style="--z:10">
+        <div class="face front paper">
+          <i class="tape"></i>
+          <div class="pg-body">
+            <div class="pg-top"><span>Ngày:</span><span class="date-pill" data-date></span></div>
+            <h3 class="pg-title" id="p3Title">Đang kết nối</h3>
+            <p class="pg-sub" id="p3Sub">Camlo đang kết nối với <b id="p3Prov">Discord</b>.</p>
+            <div class="todo-h">Việc cần làm</div>
+            <ul class="todo" id="todo">
+              <li><span class="cb"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span id="p3Step1">Xác nhận tài khoản</span></li>
+              <li><span class="cb"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Lấy tên và ảnh đại diện</span></li>
+              <li><span class="cb"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Chuẩn bị bảng giờ học</span></li>
+            </ul>
+            <div class="p3-end">
+              <button type="button" class="linkbtn" id="p3Back">Chọn cách khác</button>
+              <div class="p3-ok"><button type="button" class="btn btn-primary" id="p3Enter">Vào phòng học</button></div>
+            </div>
+          </div>
+          <i class="us"></i>
+        </div>
+      </div>
+
+      <!-- trang 2: đăng nhập -->
+      <div class="leaf" id="leafLogin" style="--z:20">
+        <div class="face front paper">
+          <i class="tape"></i>
+          <div class="pg-body">
+            <div class="pg-top"><span>Ngày:</span><span class="date-pill" data-date></span></div>
+            <h3 class="pg-title" id="loginTitle">Đăng nhập</h3>
+            <p class="pg-sub">Chọn một tài khoản để vào phòng học và lưu giờ học của bạn.</p>
+            <div class="prov">
+              <button type="button" class="pbtn google" data-provider="google">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.57-5.16 3.57-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09C6.22 6.86 8.87 4.75 12 4.75z"/></svg>
+                Tiếp tục với Google
+              </button>
+              <button type="button" class="pbtn discord" data-provider="discord">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="#fff"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                Tiếp tục với Discord
+              </button>
+            </div>
+            <p class="pg-note"><svg class="ic"><use href="#i-lock"/></svg><span>Camlo chỉ đọc tên và ảnh đại diện của bạn. Không xem, không ghi hình.</span></p>
+          </div>
+          <i class="shade"></i><i class="us"></i>
+        </div>
+        <div class="face back paper"><i class="shade"></i></div>
+      </div>
+
+      <!-- trang bìa -->
+      <div class="leaf" id="leafCover" style="--z:30">
+        <div class="face front cover">
+          <i class="strap"></i>
+          <div class="label">
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg>
+            <svg class="mk" viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="7" fill="#C94650"/><circle cx="15" cy="16" r="7.5" fill="none" stroke="#FFF" stroke-width="2.4"/><circle cx="15" cy="16" r="2.6" fill="#FFF"/><circle cx="24" cy="6.5" r="3" fill="#F4CF55"/></svg>
+            <b>Camlo</b>
+            <span>Sổ giờ học</span>
+          </div>
+          <i class="shade"></i>
+        </div>
+        <div class="face back cover-back"><i class="shade"></i></div>
+      </div>
+    </div>
+    <div class="rings" id="rings" aria-hidden="true"></div>
+  </div>
+</div>
+
+<script src="./script.js"></script>
+</body>
+</html>
